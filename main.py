@@ -1,6 +1,10 @@
 from core.core import *
 from commands import *
+from plugins.webclocker import *
 
-if __name__ == '__main__':
-    mybot = Bot('mybot').addcmd(start=start).run()
-
+(
+    Bot("mybot")
+    .addcmd(start=start)
+    .addcmd(screenshot=screenshot)
+    .addcmd(webclocker=webclocker)
+).run()

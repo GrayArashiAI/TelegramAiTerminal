@@ -1,10 +1,6 @@
-mybot:  # Set a name for your bot if you have multiple bots.
+mybot: # Set a name for your bot if you have multiple bots.
   TOKEN: 9999999999:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # Replace this with your own API Key.
   master:
-    - # Add your User ID here.
-    - # Add another User ID if you want.
-    - # The bot would be public if you leave this blank.
-  command:
-    - start
-    - # todo
-    - 
+    -  # Add your User ID here.
+    -  # Add another User ID if you want.
+    -  # The bot would be public if you leave this blank.
