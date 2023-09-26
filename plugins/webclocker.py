@@ -42,25 +42,25 @@ async def webclocker(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await screenshot(update, context)
 
 
-async def press(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def key(update: Update, context: ContextTypes.DEFAULT_TYPE):
     args = update.message.text.split()[1:]
     for s in args:
-        arg = s.strip().lower
-        try:
-            if "+" in arg:
-                hotkey(*arg.split("+"))
-            else:
-                press(arg)
-            await screenshot(update, context)
-        except Exception as e:
-            await send_message(update, context, str(e))
-    
+        arg = s.strip().lower()
+        if "+" in arg:
+            hotkey(*arg.split("+"))
+            time.sleep(0.1)
+        else:
+            press(arg)
+            time.sleep(0.1)
+        time.sleep(1)
+    await screenshot(update, context)
 
-async def input(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = update.message.text.split("", 1)[1]
-    try:
-        typewrite(text)
+
+async def type(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = update.message.text.split(" ", 1)
+    if len(text) > 1:
+        typewrite(text[1])
+        time.sleep(0.5)
         await screenshot(update, context)
-    except Exception as e:
-        await send_message(update, context, str(e))
-
+    else:
+        await update.message.reply_text("Empty text.")

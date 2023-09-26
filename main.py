@@ -7,5 +7,6 @@ from plugins.webclocker import *
     .addcmd(start=start)
     .addcmd(screenshot=screenshot)
     .addcmd(webclocker=webclocker)
-    .addcmd(press=press)
+    .addcmd(type=type)
+    .addcmd(key=key)
 ).run()
