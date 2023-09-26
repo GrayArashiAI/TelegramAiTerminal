@@ -1,6 +1,7 @@
 import os
 import time
 import webbrowser
+from core.core import *
 from telegram import Update
 from telegram.ext import ContextTypes
 from pyautogui import typewrite, press, hotkey
@@ -23,6 +24,10 @@ async def webclocker(update: Update, context: ContextTypes.DEFAULT_TYPE):
     os.system("taskkill /F /IM chrome.exe")
     time.sleep(0.5)
     webbrowser.open("https://sites.google.com/k-cr.jp/k-net")
+    press("tab")
+    time.sleep(0.1)
+    press("enter")
+    time.sleep(0.1)
     time.sleep(8)
     for i in range(15):
         press("tab")
@@ -37,12 +42,25 @@ async def webclocker(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await screenshot(update, context)
 
 
-async def shukkin(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    press("enter")
-    await screenshot(update, context)
+async def press(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    args = update.message.text.split()[1:]
+    for s in args:
+        arg = s.strip().lower
+        try:
+            if "+" in arg:
+                hotkey(*arg.split("+"))
+            else:
+                press(arg)
+            await screenshot(update, context)
+        except Exception as e:
+            await send_message(update, context, str(e))
+    
 
+async def input(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = update.message.text.split("", 1)[1]
+    try:
+        typewrite(text)
+        await screenshot(update, context)
+    except Exception as e:
+        await send_message(update, context, str(e))
 
-async def taikin(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    press("tab")
-    press("enter")
-    await screenshot(update, context)

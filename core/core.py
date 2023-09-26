@@ -1,7 +1,8 @@
 import os
 import glob
 import yaml
-from telegram.ext import ApplicationBuilder, CommandHandler
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram import Update
 
 
 def load_config(config: dict = {}):
@@ -17,6 +18,10 @@ def run_bot(bot_name: str, **command_list: dict[str, callable]):
     for cmd, function in command_list.items():
         app.add_handler(CommandHandler(cmd, function))
     app.run_polling()
+
+
+async def send_message(update: Update, context: ContextTypes.DEFAULT_TYPE, text):
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
 
 class Bot:
