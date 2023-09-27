@@ -7,14 +7,16 @@ from telegram import Update
 from telegram.ext import ContextTypes
 from pyautogui import typewrite, press, hotkey
 from PIL import ImageGrab
+from screeninfo import get_monitors
 
 
 async def screenshot(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    with io.BytesIO() as image:
-        ImageGrab.grab(all_screens=True).save(image, "PNG")
-        image.seek(0)
-        await context.bot.send_photo(chat_id=update.effective_chat.id, photo=image)
-
+    for i, s in enumerate(get_monitors()):
+            image = ImageGrab.grab(bbox=(s.x, s.y, s.x + s.width, s.y + s.height))
+            with io.BytesIO() as file:
+                image.save(file, "PNG")
+                file.seek(0)
+                await context.bot.send_photo(chat_id=update.effective_chat.id, photo=file)
 
 async def webclocker(update: Update, context: ContextTypes.DEFAULT_TYPE):
     hotkey("ctrl", "alt")
