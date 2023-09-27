@@ -1,3 +1,4 @@
+import io
 import os
 import time
 import webbrowser
@@ -9,13 +10,10 @@ from PIL import ImageGrab
 
 
 async def screenshot(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    image_file = "image/screenshot.png"
-    screenshot = ImageGrab.grab(all_screens=True)
-    screenshot.save(image_file, "PNG")
-    await context.bot.send_photo(
-        chat_id=update.effective_chat.id, photo=open(image_file, "rb")
-    )
-    os.remove(image_file)
+    with io.BytesIO() as image:
+        ImageGrab.grab(all_screens=True).save(image, "PNG")
+        image.seek(0)
+        await context.bot.send_photo(chat_id=update.effective_chat.id, photo=image)
 
 
 async def webclocker(update: Update, context: ContextTypes.DEFAULT_TYPE):
