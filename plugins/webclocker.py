@@ -12,7 +12,7 @@ from screeninfo import get_monitors
 
 async def screenshot(update: Update, context: ContextTypes.DEFAULT_TYPE):
     for i, s in enumerate(get_monitors()):
-            image = ImageGrab.grab(bbox=(s.x, s.y, s.x + s.width, s.y + s.height))
+            image = ImageGrab.grab(bbox=(s.x, s.y, s.x + s.width, s.y + s.height), all_screens=True)
             with io.BytesIO() as file:
                 image.save(file, "PNG")
                 file.seek(0)
